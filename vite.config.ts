@@ -11,7 +11,11 @@ export default defineConfig({
     port: 8080,
   },
   plugins: [
-    tanstackStart(),
+    tanstackStart({
+      server: {
+        preset: "vercel"
+      }
+    }),
     react(),
     tailwindcss(),
     tsconfigPaths(),
