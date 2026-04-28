@@ -1,0 +1,473 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: "Caveat";
+  font-display: swap;
+  src: local("Caveat");
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* Photo booth theme colors */
+  --color-paper: var(--paper);
+  --color-paper2: var(--paper2);
+  --color-paper3: var(--paper3);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-booth-accent1: var(--a1);
+  --color-booth-accent2: var(--a2);
+  --color-booth-accent3: var(--a3);
+  --color-booth-btn: var(--btn-bg);
+  --color-booth-btn-border: var(--btn-border);
+  --color-booth-btn-text: var(--btn-text);
+  --color-shadow: var(--shadow-color);
+
+  --font-display: var(--fd);
+  --font-heading: var(--fh);
+  --font-body: var(--fb);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.97 0.005 85);
+  --foreground: oklch(0.25 0.03 260);
+  --card: oklch(0.97 0.005 85);
+  --card-foreground: oklch(0.25 0.03 260);
+  --popover: oklch(0.97 0.005 85);
+  --popover-foreground: oklch(0.25 0.03 260);
+  --primary: oklch(0.62 0.15 40);
+  --primary-foreground: oklch(0.98 0.005 85);
+  --secondary: oklch(0.93 0.01 85);
+  --secondary-foreground: oklch(0.25 0.03 260);
+  --muted: oklch(0.93 0.01 85);
+  --muted-foreground: oklch(0.5 0.03 260);
+  --accent: oklch(0.93 0.01 85);
+  --accent-foreground: oklch(0.25 0.03 260);
+  --destructive: oklch(0.58 0.24 27);
+  --destructive-foreground: oklch(0.98 0.005 85);
+  --border: oklch(0.88 0.02 85);
+  --input: oklch(0.88 0.02 85);
+  --ring: oklch(0.62 0.15 40);
+
+  /* Photo booth tokens */
+  --paper: #f4f1de;
+  --paper2: #e9e4ce;
+  --paper3: #dfd7be;
+  --ink: #3d405b;
+  --ink-soft: #5c608a;
+  --shadow-color: #d1ccb6;
+  --a1: #e07a5f;
+  --a2: #81b29a;
+  --a3: #f2cc8f;
+  --a4: #3d405b;
+  --a5: #e07a5f;
+  --btn-bg: #e07a5f;
+  --btn-border: #3d405b;
+  --btn-text: #ffffff;
+
+  --fd: "Caveat", cursive;
+  --fh: "Architects Daughter", cursive;
+  --fb: "Nunito", sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --gap-xs: clamp(0.3rem, 1vw, 0.75rem);
+  --gap-sm: clamp(0.5rem, 1.5vw, 1.25rem);
+  --gap-md: clamp(0.75rem, 2vw, 1.75rem);
+  --gap-lg: clamp(1rem, 3vw, 3rem);
+  --gap-xl: clamp(1.5rem, 5vw, 5rem);
+}
+
+/* Mode variants */
+body.ann {
+  --paper: #ffe5ec;
+  --paper2: #ffccd5;
+  --paper3: #ffb3c6;
+  --ink: #590d22;
+  --ink-soft: #801331;
+  --shadow-color: #ffa6c9;
+  --a1: #ff0054;
+  --a2: #ff7096;
+  --a3: #c9184a;
+  --btn-bg: #ff0054;
+  --btn-border: #590d22;
+}
+
+body.bday {
+  --paper: #e0fbfc;
+  --paper2: #c2f4f7;
+  --paper3: #a3edf2;
+  --ink: #293241;
+  --ink-soft: #3e4b62;
+  --shadow-color: #98c1d9;
+  --a1: #ee6c4d;
+  --a2: #3d5a80;
+  --a3: #98c1d9;
+  --btn-bg: #ee6c4d;
+  --btn-border: #293241;
+}
+
+body.night {
+  --paper: #1a1a3e;
+  --paper2: #24244a;
+  --paper3: #2d2d5a;
+  --ink: #F0EAD6;
+  --ink-soft: #C8BFAE;
+  --shadow-color: rgba(0,0,0,0.4);
+  --btn-bg: #E27B73;
+  --btn-border: rgba(240,234,214,0.3);
+  --btn-text: #ffffff;
+}
+
+/* Specific background for night mode to add depth */
+body.night .screen {
+  background: linear-gradient(180deg, #1a1a3e 0%, #2d2050 60%, #1a1a3e 100%) !important;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--fb);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100dvh;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    transition:
+      background-color 0.5s var(--ease),
+      color 0.5s var(--ease);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  }
+
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+/* Paper texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  z-index: 9999;
+}
+
+/* Screen system */
+.screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  z-index: 10;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes doorOpenLeft {
+  from {
+    transform: perspective(800px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(800px) rotateY(-110deg);
+  }
+}
+
+@keyframes doorOpenRight {
+  from {
+    transform: perspective(800px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(800px) rotateY(110deg);
+  }
+}
+
+@keyframes boothZoom {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes printerFeed {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  30% {
+    transform: translateY(-60%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes printerHead {
+  0%,
+  100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes paperSlide {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes filmPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+/* Breeze / drift animations for landing scene — clouds drift right → left */
+@keyframes cloudDrift {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(-18px) translateY(-3px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+@keyframes cloudDriftAlt {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(-14px) translateY(4px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+@keyframes rainbowSway {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50%       { transform: rotate(2deg) translateY(-3px); }
+}
+@keyframes rainbowShine {
+  0%, 100% { filter: brightness(1) saturate(1); }
+  40%       { filter: brightness(1.18) saturate(1.3) drop-shadow(0 0 8px rgba(248,200,64,0.4)); }
+  60%       { filter: brightness(1.12) saturate(1.2) drop-shadow(0 0 6px rgba(224,64,96,0.3)); }
+}
+@keyframes sunSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+
+/* ── Zero-Gravity "Weightless Float" system ─────────────────────────────── */
+
+/* Main booth floats up — as if the ground just released it */
+@keyframes boothFloat {
+  0%   { transform: translateX(-50%) translateY(0px); }
+  30%  { transform: translateX(-50%) translateY(-14px) rotate(-0.6deg); }
+  60%  { transform: translateX(-50%) translateY(-10px) rotate(0.4deg); }
+  100% { transform: translateX(-50%) translateY(0px); }
+}
+
+/* Sunflowers uproot: sway sideways AND drift upward */
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+@keyframes flowerSwayAlt {
+  0%, 100% { transform: rotate(3deg); }
+  50%       { transform: rotate(-5deg); }
+}
+
+/* Front flowers (smaller ones) drift upward faster */
+@keyframes flowerFrontFloat {
+  0%   { transform: rotate(-2deg) translateY(0px); }
+  40%  { transform: rotate(3deg) translateY(-18px); }
+  70%  { transform: rotate(-1deg) translateY(-10px); }
+  100% { transform: rotate(-2deg) translateY(0px); }
+}
+
+/* Fence gently rises from the ground */
+@keyframes fenceFloat {
+  0%   { transform: translateX(-50%) translateY(0px); }
+  50%  { transform: translateX(-50%) translateY(-8px); }
+  100% { transform: translateX(-50%) translateY(0px); }
+}
+
+/* Road slowly lifts and fades into the void below */
+@keyframes roadFloat {
+  0%   { transform: translateX(-50%) translateY(0px) scaleY(1); opacity: 1; }
+  50%  { transform: translateX(-50%) translateY(-6px) scaleY(0.97); opacity: 0.85; }
+  100% { transform: translateX(-50%) translateY(0px) scaleY(1); opacity: 1; }
+}
+
+@keyframes birdGlide {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(20px) translateY(-6px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* ── Background photo strip rise animation ───────────────────────────────── */
+@keyframes stripRise {
+  0%   { transform: translateY(110vh) rotate(var(--strip-rot, -6deg)); opacity: 0; }
+  8%   { opacity: 0.22; }
+  90%  { opacity: 0.22; }
+  100% { transform: translateY(-110vh) rotate(var(--strip-rot, -6deg)); opacity: 0; }
+}
+
+/* ── Night-mode star twinkle ─────────────────────────────────────────────── */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  45%       { opacity: 0.3;  transform: scale(0.7); }
+  55%       { opacity: 0.9;  transform: scale(1.15); }
+}
+
+/* ── Responsive hero graphics ─────────────────────────────────────────────── */
+.hero-graphics {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.15 / 1;
+  max-width: min(640px, 90vw);
+  margin: 0 auto 0 0;
+  min-height: 0;
+  transform: translateY(-6%) translateX(-2%);
+}
+
+@media (max-width: 680px) {
+  .hero-graphics {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    transform: translateY(0);
+  }
+}
