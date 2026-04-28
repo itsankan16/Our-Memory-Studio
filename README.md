@@ -4,6 +4,8 @@
     <strong>A highly interactive, beautifully designed, responsive web-based photo booth application.</strong>
     <br />
     <br />
+    <a href="https://ourmemorystudio.vercel.app/"><strong>View Live Website</strong></a>
+    ·
     <a href="https://github.com/itsankan16/Our-Memory-Studio/issues">Report Bug</a>
     ·
     <a href="https://github.com/itsankan16/Our-Memory-Studio/issues">Request Feature</a>
