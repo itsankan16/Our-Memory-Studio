@@ -30,7 +30,8 @@ export function CaptureScreen() {
         videoRef.current.srcObject = stream;
         await new Promise<void>((r) => {
           videoRef.current!.onloadedmetadata = () => r();
-          setTimeout(r, 3200);
+          // Reduced from 3200ms — avoids long dead wait if metadata fires quickly
+          setTimeout(r, 1500);
         });
         videoRef.current.play().catch(() => {});
       }
@@ -84,36 +85,43 @@ export function CaptureScreen() {
   const runCapture = useCallback(async () => {
     if (capturing) return;
     setCapturing(true);
-    lockMode(); // Lock mode during capture
+    lockMode();
 
-    const remaining = numPhotos - takenCount;
+    // Snapshot the count at start so it doesn't drift during the loop
+    const startCount = frames.length;
+    const remaining = numPhotos - startCount;
     for (let i = 0; i < remaining; i++) {
-      setStatus(`Picture ${takenCount + i + 1} of ${numPhotos} — smile!`);
+      setStatus(`Picture ${startCount + i + 1} of ${numPhotos} — smile!`);
+      // Brief "get ready" flash before first tick so user knows it's starting
+      if (i > 0) {
+        await wait(400);
+      }
       for (let n = 3; n >= 1; n--) {
         setCountdown(n);
         playTick(n === 1);
         await wait(1000);
       }
       setCountdown(null);
-      playShutter();
-      setFlash(true);
-      await wait(300);
-      setFlash(false);
-      await wait(500);
+      // ✅ Snap IMMEDIATELY when countdown ends — no delay
       const frame = snapFrame();
-      if (frame) addFrame(frame);
+      playShutter();
       if (navigator.vibrate) navigator.vibrate([40, 100, 40]);
+      setFlash(true);
+      await wait(220);
+      setFlash(false);
+      if (frame) addFrame(frame);
+      // Show quick "got it" status before next countdown
       if (i < remaining - 1) {
-        setStatus("Got it! Next one...");
-        await wait(1500);
+        setStatus(`✓ Got it! Next one coming...`);
       }
+      // ✅ Immediately loop to next countdown (400ms wait is at top of loop)
     }
-    setStatus("Done! Pick your frame style...");
-    await wait(500);
+    setStatus("✨ Done! Choosing your frame...");
+    await wait(700);
     stopCamera();
     setScreen("frame-select");
     setCapturing(false);
-  }, [capturing, numPhotos, takenCount, snapFrame, addFrame, lockMode, stopCamera, setScreen]);
+  }, [capturing, numPhotos, frames.length, snapFrame, addFrame, lockMode, stopCamera, setScreen]);
 
   return (
     <div
@@ -211,7 +219,7 @@ export function CaptureScreen() {
                 filter: filter === "bw" ? "grayscale(100%)" : "none",
               }}
             />
-            {/* Flash */}
+            {/* Flash — bursts bright instantly, then fades out */}
             {flash && (
               <div
                 style={{
@@ -220,13 +228,14 @@ export function CaptureScreen() {
                   background: "#fff",
                   zIndex: 10,
                   borderRadius: "inherit",
-                  animation: "fadeIn 0.07s forwards",
+                  animation: "flashBurst 0.22s ease-out forwards",
                 }}
               />
             )}
-            {/* Countdown */}
+            {/* Countdown — pops in with scale bounce on each number */}
             {countdown !== null && (
               <div
+                key={countdown}
                 style={{
                   position: "absolute",
                   top: "50%",
@@ -235,9 +244,12 @@ export function CaptureScreen() {
                   fontFamily: "var(--fd)",
                   fontSize: "clamp(2.5rem, 10vh, 5rem)",
                   fontWeight: 700,
-                  color: "rgba(255,255,255,.95)",
-                  textShadow: "2px 4px 14px rgba(0,0,0,.65)",
+                  color: countdown === 1 ? "rgba(255,200,100,.97)" : "rgba(255,255,255,.95)",
+                  textShadow: countdown === 1
+                    ? "0 0 30px rgba(255,180,0,.8), 2px 4px 14px rgba(0,0,0,.65)"
+                    : "2px 4px 14px rgba(0,0,0,.65)",
                   zIndex: 8,
+                  animation: "countPop 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards",
                 }}
               >
                 {countdown}

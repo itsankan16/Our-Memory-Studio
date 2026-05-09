@@ -228,6 +228,20 @@ body::after {
   }
 }
 
+/* Camera flash: starts fully white, quickly fades out */
+@keyframes flashBurst {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Countdown number: pops in with a spring scale bounce */
+@keyframes countPop {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  70%  { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+
 @keyframes scaleIn {
   from {
     transform: scale(0.8);
